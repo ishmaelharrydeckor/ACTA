@@ -284,10 +284,36 @@ class ActaWaitlistApp {
         .then(() => console.log('Link shared successfully'))
         .catch((err) => console.log('Error sharing link:', err));
     } else {
-      // Fallback copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Referral access link copied to your clipboard!');
+      // Fallback copy to clipboard (bulletproof for secure contexts & local file:// runs)
+      const shareUrl = window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl)
+          .then(() => alert('Referral access link copied to your clipboard!'))
+          .catch(() => this.fallbackCopyText(shareUrl));
+      } else {
+        this.fallbackCopyText(shareUrl);
+      }
     }
+  }
+
+  // Older browser & local file:// copy fallback
+  fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed'; // prevent scrolling to bottom
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      alert('Referral access link copied to your clipboard!');
+    } catch (err) {
+      console.error('Could not copy text: ', err);
+      // Final fallback: ask the user to manually copy it
+      prompt('Copy the waitlist link below:', text);
+    }
+    document.body.removeChild(textArea);
   }
 
   // Form Submission
