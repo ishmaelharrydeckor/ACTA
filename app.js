@@ -175,17 +175,23 @@ class ActaWaitlistApp {
 
     let isValid = true;
 
-    // Check input structures
-    const inputs = activeSection.querySelectorAll('input[required]');
-    inputs.forEach(input => {
-      input.style.borderColor = '';
+    // Check all inputs inside active section
+    const allInputs = activeSection.querySelectorAll('input');
+    allInputs.forEach(input => {
+      if (input.style) {
+        input.style.borderColor = '';
+      }
       const val = input.value.trim();
 
-      if (!val) {
+      // For required fields, fail if empty
+      if (input.hasAttribute('required') && !val) {
         isValid = false;
         this.shakeElement(input);
         return;
       }
+
+      // If empty and optional, skip further checks
+      if (!val) return;
 
       // Strict email verify
       if (input.type === 'email') {
@@ -201,6 +207,16 @@ class ActaWaitlistApp {
         const nameWords = val.split(/\s+/);
         const nameRegex = /^[\p{L}\s'-]{3,60}$/u;
         if (nameWords.length < 2 || !nameRegex.test(val)) {
+          isValid = false;
+          this.shakeElement(input);
+        }
+      }
+
+      // WhatsApp format verification (optional phone check)
+      if (input.id === 'whatsapp') {
+        const cleanPhone = val.replace(/[\s\-()]/g, '');
+        const phoneRegex = /^\+?[1-9]\d{6,14}$/;
+        if (!phoneRegex.test(cleanPhone)) {
           isValid = false;
           this.shakeElement(input);
         }
