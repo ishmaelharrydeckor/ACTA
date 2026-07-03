@@ -3,7 +3,7 @@
 class ActaWaitlistApp {
   constructor() {
     this.currentStep = 1;
-    this.totalSteps = 7; // Step 1 to 7 (Success)
+    this.totalSteps = 6; // Step 1 to 6 (Success)
     
     // UI Elements
     this.form = document.getElementById('actaWaitlistForm');
@@ -15,11 +15,12 @@ class ActaWaitlistApp {
     
     // Rotating headlines array
     this.headlines = [
-      "Faster with AI.",
-      "Turn Ideas Into Products.",
-      "AI-Native Product Engineering.",
-      "Software Built for Tomorrow.",
-      "Build Once. Scale Faster."
+      "Android Apps with AI.",
+      "Design Modern UI/UX with AI.",
+      "Websites with AI.",
+      "Turn Ideas Into Real Products.",
+      "Become an AI Software Builder.",
+      "Learn the Future of Software Development."
     ];
     this.headlineIndex = 0;
     
@@ -61,7 +62,7 @@ class ActaWaitlistApp {
     this.updateUI();
   }
 
-  // Closes conversational modal
+  // Opens conversational modal and resets steps
   closeWaitlist() {
     this.modal.classList.remove('active');
     this.landingPage.style.opacity = '1';
@@ -104,7 +105,7 @@ class ActaWaitlistApp {
     // Validate the current step fields
     if (!this.validateStep(this.currentStep)) return;
 
-    if (this.currentStep === 6) {
+    if (this.currentStep === 5) {
       this.handleSubmit();
       return;
     }
@@ -124,7 +125,7 @@ class ActaWaitlistApp {
 
   // Step Nav: Back
   prevStep() {
-    if (this.currentStep <= 1 || this.currentStep === 7) return;
+    if (this.currentStep <= 1 || this.currentStep === 6) return;
 
     const currentEl = document.getElementById(`step-${this.currentStep}`);
     currentEl.classList.remove('active');
@@ -141,7 +142,7 @@ class ActaWaitlistApp {
   // Keyboard navigation shortcuts
   handleKeyDown(e) {
     // Only capture keypresses when the modal is active
-    if (!this.modal.classList.contains('active') || this.currentStep === 7) return;
+    if (!this.modal.classList.contains('active') || this.currentStep === 6) return;
 
     const key = e.key.toLowerCase();
     const activeSection = document.getElementById(`step-${this.currentStep}`);
@@ -241,16 +242,16 @@ class ActaWaitlistApp {
 
   // Progress metrics and auto-scroll focus controls
   updateUI() {
-    // Progress calculation (interactive inputs step 1 to 6)
-    const pct = Math.min(((this.currentStep - 1) / 5) * 100, 100);
+    // Progress calculation (interactive inputs step 1 to 5)
+    const pct = Math.min(((this.currentStep - 1) / 4) * 100, 100);
     this.progressBar.style.width = `${pct}%`;
 
     // Arrows
     const btnPrev = document.getElementById('navPrev');
     const btnNext = document.getElementById('navNext');
     if (btnPrev && btnNext) {
-      btnPrev.disabled = (this.currentStep === 1 || this.currentStep === 7);
-      btnNext.disabled = (this.currentStep === 7);
+      btnPrev.disabled = (this.currentStep === 1 || this.currentStep === 6);
+      btnNext.disabled = (this.currentStep === 6);
     }
 
     // Scroll active element cleanly
@@ -298,14 +299,12 @@ class ActaWaitlistApp {
       // Step 1
       role: formData.get('role'),
       // Step 2
-      buildType: formData.get('buildType'),
+      learnInterest: formData.get('learnInterest'),
       // Step 3
-      projectType: formData.get('projectType'),
+      commitment: formData.get('commitment'),
       // Step 4
-      timeline: formData.get('timeline'),
-      // Step 5
       referral: formData.get('referral'),
-      // Step 6 personal details
+      // Step 5 personal details
       fullName: formData.get('fullName'),
       email: formData.get('email'),
       whatsapp: formData.get('whatsapp') || 'N/A',
@@ -340,7 +339,7 @@ class ActaWaitlistApp {
     currentEl.classList.remove('active');
     currentEl.classList.add('exit');
 
-    this.currentStep = 7;
+    this.currentStep = 6;
 
     const successEl = document.getElementById(`step-${this.currentStep}`);
     successEl.classList.add('active');
