@@ -385,9 +385,15 @@ class ActaWaitlistApp {
   }
 }
 
-// Init
+// Safe Initialization
 let app;
-window.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   app = new ActaWaitlistApp();
   window.app = app;
-});
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
