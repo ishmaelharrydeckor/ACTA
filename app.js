@@ -336,26 +336,19 @@ class ActaWaitlistApp {
   handleSubmit() {
     if (!this.validateStep(this.currentStep)) return;
 
-    const formData = new FormData(this.form);
-    const data = {
-      // Step 1
-      role: formData.get('role'),
-      // Step 2
-      learnInterest: formData.get('learnInterest'),
-      // Step 3
-      commitment: formData.get('commitment'),
-      // Step 4
-      referral: formData.get('referral'),
-      // Step 5 personal details
+    // Structure payload keys to match the exact keys Google Apps Script expects
+    const payload = {
+      timestamp: new Date().toISOString(),
       fullName: formData.get('fullName'),
       email: formData.get('email'),
-      whatsapp: formData.get('whatsapp') || 'N/A',
-      company: formData.get('company'),
-      country: formData.get('country'),
-      timestamp: new Date().toISOString()
+      whatsapp: formData.get('whatsapp'),
+      occupation: formData.get('role'), // Maps "What best describes you?" to Occupation column
+      primarySkill: formData.get('learnInterest'), // Maps "What are you interested in learning?" to Primary Skill column
+      reason: `Commitment: ${formData.get('commitment')} | Company: ${formData.get('company')} | Country: ${formData.get('country')}`, // Combines remaining details into Reason column
+      referral: formData.get('referral')
     };
 
-    console.log('Acta Waitlist Submission:', data);
+    console.log('Acta Waitlist Submission:', payload);
 
     // Google Sheets integration via scriptURL
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx3_pkZys2dBwTHK6ReO8IfbffDJTn8A6qhOLOtmnCQ346yu4LxlQsni6MI8mmwIMGGpA/exec';
@@ -366,14 +359,14 @@ class ActaWaitlistApp {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(payload)
     })
     .then(() => console.log('Data successfully logged to Google Sheets'))
     .catch((err) => console.error('Error posting to script:', err));
 
     // Save locally
     let list = JSON.parse(localStorage.getItem('acta_waitlist') || '[]');
-    list.push(data);
+    list.push(payload);
     localStorage.setItem('acta_waitlist', JSON.stringify(list));
 
     // Move to success screen
