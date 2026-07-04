@@ -215,7 +215,7 @@ class ActaWaitlistApp {
       // WhatsApp format verification (optional phone check)
       if (input.id === 'whatsapp') {
         const cleanPhone = val.replace(/[\s\-()]/g, '');
-        const phoneRegex = /^\+?[1-9]\d{6,14}$/;
+        const phoneRegex = /^\+?[0-9]{7,15}$/;
         if (!phoneRegex.test(cleanPhone)) {
           isValid = false;
           this.shakeElement(input);
