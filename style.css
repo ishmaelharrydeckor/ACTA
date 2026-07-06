@@ -722,10 +722,13 @@ body::after {
 
 /* Success Card styling */
 .success-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 580px;
   margin: 0 auto;
+  padding: 10px 0;
 }
 
 .success-badge {
@@ -764,7 +767,7 @@ body::after {
 }
 
 .success-title {
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
   font-weight: 800;
   color: var(--text-white);
   letter-spacing: -0.03em;
@@ -773,23 +776,175 @@ body::after {
 }
 
 .success-subtitle {
-  font-size: 1.15rem;
-  color: var(--text-primary);
-  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-color-hover);
+  margin-bottom: 16px;
   line-height: 1.4;
 }
 
 .success-description {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
+  line-height: 1.5;
   margin-bottom: 32px;
 }
 
-.success-actions {
-  display: flex;
-  gap: 16px;
+.success-description p {
+  margin-bottom: 8px;
+}
+
+.success-description .highlight-journey {
+  font-weight: 600;
+  color: var(--accent-color-hover);
+}
+
+/* Community Invite Card (Sleek Dark Glassmorphism) */
+.community-invite-card {
   width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 32px 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  margin-bottom: 24px;
+  text-align: left;
+  animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.community-tagline {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-color-hover);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.community-title {
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.community-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.community-benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.community-benefits-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.community-tagline-sub {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 24px;
+}
+
+.emoji-bullet {
+  flex-shrink: 0;
+}
+
+.community-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.btn-community-join {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  padding: 16px 32px;
+  border-radius: 9999px; /* Rounded pill style */
+  font-weight: 600;
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, #137d45 0%, #116e3d 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px 0 rgba(19, 125, 69, 0.3);
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.btn-community-join:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(19, 125, 69, 0.45);
+  background: linear-gradient(135deg, #116e3d 0%, #0d542e 100%);
+}
+
+.btn-community-join:active {
+  transform: translateY(0);
+}
+
+.community-disclaimer {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 90%;
+}
+
+.return-home-wrapper {
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-return-home {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  cursor: pointer;
+  width: auto;
+}
+
+.btn-return-home:hover {
+  border-color: var(--border-hover);
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Modal controls footer */
